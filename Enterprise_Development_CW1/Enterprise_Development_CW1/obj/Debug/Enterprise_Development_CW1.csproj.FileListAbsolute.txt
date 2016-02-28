@@ -1,0 +1,10 @@
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\bin\Debug\Enterprise_Development_CW1.exe.config
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\bin\Debug\Enterprise_Development_CW1.exe
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\bin\Debug\Enterprise_Development_CW1.pdb
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.csprojResolveAssemblyReference.cache
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.MainHome.resources
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.Properties.Resources.resources
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.csproj.GenerateResource.Cache
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.exe
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.pdb
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.Converter.resources
