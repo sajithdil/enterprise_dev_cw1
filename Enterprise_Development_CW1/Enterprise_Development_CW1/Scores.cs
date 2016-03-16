@@ -15,6 +15,14 @@ namespace Enterprise_Development_CW1
         public Scores()
         {
             InitializeComponent();
+
+            Util.UpdateScoreEvent += new Util.ScoreUpdateHandler(HandleUpdateScore);
+        }
+
+        private void HandleUpdateScore(ValueType from, ValueType to)
+        {
+            MessageBox.Show("Event Fired");
         }
     }
+    
 }

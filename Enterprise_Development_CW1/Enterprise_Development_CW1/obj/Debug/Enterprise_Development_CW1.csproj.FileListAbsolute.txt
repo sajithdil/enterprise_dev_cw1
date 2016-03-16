@@ -8,3 +8,5 @@ E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Developm
 E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.exe
 E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.pdb
 E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.Converter.resources
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.Game.resources
+E:\IIT MSC\Enterprise Development\CW1\dev\enterprise_dev_cw1\Enterprise_Development_CW1\Enterprise_Development_CW1\obj\Debug\Enterprise_Development_CW1.UsernameDialog.resources

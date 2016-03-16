@@ -36,7 +36,7 @@ namespace Enterprise_Development_CW1
 
         private void txtHex_TextChanged(object sender, EventArgs e)
         {
-            if(!OnlyHexInString(txtHex.Text))
+            if(!Util.OnlyHexInString(txtHex.Text))
             {
                 lblErr.Text = "Error: Invalid Input in hexadecimal box";
                 txtBinary.Text = "";
@@ -57,11 +57,7 @@ namespace Enterprise_Development_CW1
             }
         }
 
-        public bool OnlyHexInString(string test)
-        {
-            // For C-style hex notation (0xFF) you can use @"\A\b(0[xX])?[0-9a-fA-F]+\b\Z"
-            return System.Text.RegularExpressions.Regex.IsMatch(test, @"\A\b[0-9a-fA-F]+\b\Z");
-        }
+        
 
         private void txtBinary_TextChanged(object sender, EventArgs e)
         {
@@ -69,9 +65,9 @@ namespace Enterprise_Development_CW1
             {
                 int output = Convert.ToInt32(txtBinary.Text, 2);
                 txtDecimal.Text = output.ToString();
-                txtHex.Text = HexConverted(txtBinary.Text);
+                txtHex.Text = Util.HexConverted(txtBinary.Text);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 lblErr.Text = "Error: Invalid Input in binary box";
                 txtDecimal.Text = "";
@@ -79,10 +75,6 @@ namespace Enterprise_Development_CW1
             }
         }
 
-        string HexConverted(string strBinary)
-        {
-            string strHex = Convert.ToInt32(strBinary, 2).ToString("X");
-            return strHex;
-        }
+        
     }
 }
