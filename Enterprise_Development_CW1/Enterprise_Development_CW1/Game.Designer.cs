@@ -1,4 +1,4 @@
-﻿namespace Enterprise_Development_CW1
+﻿namespace Enterprise_Development_CW1.View
 {
     partial class Game
     {
@@ -129,7 +129,8 @@
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(131, 321);
+            this.lblMessage.ForeColor = System.Drawing.Color.Red;
+            this.lblMessage.Location = new System.Drawing.Point(78, 321);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(0, 13);
             this.lblMessage.TabIndex = 9;
@@ -172,6 +173,7 @@
             this.Controls.Add(this.btnStart);
             this.Name = "Game";
             this.Text = "Game";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Game_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

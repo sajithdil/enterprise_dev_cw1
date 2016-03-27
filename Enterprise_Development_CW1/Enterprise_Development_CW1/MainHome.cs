@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Enterprise_Development_CW1
+namespace Enterprise_Development_CW1.View
 {
     public partial class MainHome : Form
     {
@@ -20,6 +20,15 @@ namespace Enterprise_Development_CW1
         
         private void converterToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(Converter))
+                {
+                    form.Activate();
+                    MessageBox.Show("Converter Already Open");
+                    return;
+                }
+            }
             Converter c = new Converter();
             c.MdiParent = this;
             c.Show();
@@ -27,20 +36,40 @@ namespace Enterprise_Development_CW1
 
         private void gameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Game g = new Game();
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(Game))
+                {
+                    form.Activate();
+                    MessageBox.Show("Game Already Open");
+                    return;
+                }
+            }
+            Game g = new Game(this);
             g.MdiParent = this;
             g.Show();
 
-            Scores s = new Scores();
-            s.MdiParent = this;
-            s.Show();
+            
         }
 
         private void scoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Scores s = new Scores();
-            s.MdiParent = this;
-            s.Show();
+            /* foreach (Form form in Application.OpenForms)
+             {
+                 if (form.GetType() == typeof(Game))
+                 {
+                     form.Activate();
+                     MessageBox.Show("Game Already Open");
+                     return;
+                 }
+             }*/
+            //Scores s = new Scores();
+            //s.MdiParent = this;
+            //s.Show();
+
+            ScoreHistory h = new ScoreHistory();
+            h.MdiParent = this;
+            h.Show();
         }
     }
 }

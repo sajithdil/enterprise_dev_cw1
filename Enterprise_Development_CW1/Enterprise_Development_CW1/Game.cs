@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enterprise_Development_CW1.Controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Enterprise_Development_CW1
+namespace Enterprise_Development_CW1.View
 {
     public partial class Game : Form
     {
@@ -22,9 +23,10 @@ namespace Enterprise_Development_CW1
         ValueType toType;
 
         int score = 0;
-
+        bool gameOver = true;
         string username;
-        public Game()
+        Scores s;
+        public Game(Form mdiParent)
         {
             InitializeComponent();
 
@@ -39,18 +41,26 @@ namespace Enterprise_Development_CW1
                     username = form.username;
                 }
             }
+
+            gameTimer = new Timer();
+            gameTimer.Tick += new EventHandler(timer_Tick);
+            gameTimer.Interval = 1000; // 1 second
+
+            s = new Scores(username);
+            s.MdiParent = mdiParent;
+            s.Show();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
 
             btnSubmit.Enabled = true;
-            gameTimer = new Timer();
-            gameTimer.Tick += new EventHandler(timer_Tick);
-            gameTimer.Interval = 1000; // 1 second
+
             gameTimer.Start();
 
+            Util.GameStart();
             GenerateNextQuestion(false);
+            gameOver = false;
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -68,6 +78,10 @@ namespace Enterprise_Development_CW1
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            gameTimer.Stop();
+            countdownTimer = 10;
+            lblTimer.Text = "10";
+
             if (txtUserInput.Text == "")
             {
                 ReduceLife();
@@ -77,58 +91,52 @@ namespace Enterprise_Development_CW1
                 switch (fromType)
                 {
                     case ValueType.Decimal:
-                        int result = 0;
-                        if (!int.TryParse(txtUserInput.Text, out result))
-                        {
-                            ReduceLife();
-                        }
-                        else
-                        {
-                            switch (toType)
-                            {
-                                //case ValueType.Integer:
-                                //break;
-                                case ValueType.Binary:
 
-                                    try
+                        switch (toType)
+                        {
+                            //case ValueType.Integer:
+                            //break;
+                            case ValueType.Binary:
+
+                                try
+                                {
+                                    if (txtUserInput.Text ==
+                                    Convert.ToString(int.Parse(txtValue.Text), 2))
                                     {
-                                        if (txtUserInput.Text ==
-                                        Convert.ToString(int.Parse(txtValue.Text), 2))
-                                        {
-                                            GenerateNextQuestion(true);
-                                        }
-                                        else
-                                        {
-                                            ReduceLife();
-                                        }
-                                    }
-                                    catch(Exception)
-                                    {
-                                        ReduceLife();
-                                    }
-                                    break;
-                                case ValueType.Hexadecimal:
-                                    if (Util.OnlyHexInString(txtUserInput.Text))
-                                    {
-                                        if (txtUserInput.Text == int.Parse(txtValue.Text).ToString("X"))
-                                        {
-                                            GenerateNextQuestion(true);
-                                        }
-                                        else
-                                        {
-                                            ReduceLife();
-                                        }
+                                        GenerateNextQuestion(true);
                                     }
                                     else
                                     {
                                         ReduceLife();
                                     }
-                                    break;
-                            }
+                                }
+                                catch (Exception)
+                                {
+                                    ReduceLife();
+                                }
+                                break;
+                            case ValueType.Hexadecimal:
+                                if (Util.OnlyHexInString(txtUserInput.Text))
+                                {
+                                    if (txtUserInput.Text == int.Parse(txtValue.Text).ToString("X"))
+                                    {
+                                        GenerateNextQuestion(true);
+                                    }
+                                    else
+                                    {
+                                        ReduceLife();
+                                    }
+                                }
+                                else
+                                {
+                                    ReduceLife();
+                                }
+                                break;
                         }
+
                         break;
                     case ValueType.Binary:
-                        
+
                         switch (toType)
                         {
                             case ValueType.Decimal:
@@ -197,14 +205,15 @@ namespace Enterprise_Development_CW1
                                     }
                                     break;
                                 case ValueType.Binary:
-                                    try {
-                                        string binaryUserstring = String.Join(String.Empty,
-                                          txtUserInput.Text.Select(
+                                    try
+                                    {
+                                        int output = Convert.ToInt32(txtUserInput.Text, 2);
+                                        string binarystring = String.Join(String.Empty,
+                                          txtValue.Text.Select(
                                             c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')
                                           )
                                         );
-                                        if (Convert.ToString(int.Parse(txtUserInput.Text), 2) ==
-                                            Convert.ToString(int.Parse(txtValue.Text), 2))
+                                        if (txtUserInput.Text == binarystring)
                                         {
                                             GenerateNextQuestion(true);
                                         }
@@ -213,21 +222,21 @@ namespace Enterprise_Development_CW1
                                             ReduceLife();
                                         }
                                     }
-                                    catch(Exception)
+                                    catch (Exception)
                                     {
                                         ReduceLife();
                                     }
                                     break;
 
-                                    }
+                            }
                         }
                         break;
                 }
 
 
             }
-
-
+            if(!gameOver)
+                gameTimer.Start();
         }
 
         private void ReduceLife()
@@ -235,17 +244,22 @@ namespace Enterprise_Development_CW1
             life--;
             lblMessage.Text = "Incorrect Input, You have only " + life.ToString() + " attempt(s) left";
             countdownTimer = 10;
+            lblTimer.Text = countdownTimer.ToString();
             lblAttempts.Text = life.ToString();
-
+            Util.UpdateScore(fromType, toType, txtValue.Text, txtUserInput.Text);
+            Util.LostLife();
             if (life == 0)
             {
                 gameTimer.Stop();
+                gameOver = true;
                 lblMessage.Text = "Game Over";
                 btnStart.Enabled = true;
                 life = 3;
                 lblAttempts.Text = life.ToString();
                 btnSubmit.Enabled = false;
                 lblScore.Text = "0";
+
+                Util.GameOver();
 
                 MessageBox.Show("Game Over\nFinal Score: " + score);
                 score = 0;
@@ -261,9 +275,11 @@ namespace Enterprise_Development_CW1
             if (passed)
             {
                 score++;
-                Util.UpdateScore(fromType, toType);
+                Util.UpdateScore(fromType, toType, txtValue.Text, txtUserInput.Text);
+                lblMessage.Text = "";
             }
-            lblMessage.Text = "";
+            txtUserInput.Text = "";
+
             btnSubmit.Enabled = true;
             lblScore.Text = score.ToString();
 
@@ -293,7 +309,7 @@ namespace Enterprise_Development_CW1
                     break;
                 default:
                     throw new Exception("unknown type");
-                    break;
+
             }
             switch (randomTo)
             {
@@ -308,11 +324,18 @@ namespace Enterprise_Development_CW1
                     break;
                 default:
                     throw new Exception("unknown type");
-                    break;
+
             }
 
             btnStart.Enabled = false;
-            lblGameText.Text = Util.buildGameString(fromType, toType);
+            lblGameText.Text = Util.BuildGameString(fromType, toType);
+        }
+
+        private void Game_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            gameTimer.Stop();
+            Util.GameOver();
+            s.Close();
         }
     }
 }

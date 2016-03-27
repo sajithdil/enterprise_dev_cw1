@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Enterprise_Development_CW1
+namespace Enterprise_Development_CW1.View
 {
     public partial class UsernameDialog : Form
     {

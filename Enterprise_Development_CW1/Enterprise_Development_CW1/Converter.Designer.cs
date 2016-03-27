@@ -1,4 +1,4 @@
-﻿namespace Enterprise_Development_CW1
+﻿namespace Enterprise_Development_CW1.View
 {
     partial class Converter
     {
