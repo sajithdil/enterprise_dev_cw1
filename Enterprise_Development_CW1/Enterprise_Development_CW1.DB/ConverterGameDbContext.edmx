@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ConverterGameDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ConverterGameDBModelStoreContainer">
+    <EntitySet Name="Usernames" EntityType="ConverterGameDBModel.Store.Usernames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Games" EntityType="ConverterGameDBModel.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GameDatas" EntityType="ConverterGameDBModel.Store.GameDatas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UsernamesGame" Association="ConverterGameDBModel.Store.UsernamesGame">
+      <End Role="Usernames" EntitySet="Usernames" />
+      <End Role="Game" EntitySet="Games" />
+    </AssociationSet>
+    <AssociationSet Name="GameGameData" Association="ConverterGameDBModel.Store.GameGameData">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="GameData" EntitySet="GameDatas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Usernames">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserN" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GameDatas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="FromType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ToType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="FromValue" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ToValue" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="GameString" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <Association Name="UsernamesGame">
+    <End Role="Usernames" Type="ConverterGameDBModel.Store.Usernames" Multiplicity="1" />
+    <End Role="Game" Type="ConverterGameDBModel.Store.Games" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usernames">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Game">
+        <PropertyRef Name="UserN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GameGameData">
+    <End Role="Game" Type="ConverterGameDBModel.Store.Games" Multiplicity="1" />
+    <End Role="GameData" Type="ConverterGameDBModel.Store.GameDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GameData">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConverterGameDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ConverterGameDBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Usernames" EntityType="ConverterGameDBModel.Usernames" />
+          <EntitySet Name="Games" EntityType="ConverterGameDBModel.Game" />
+          <AssociationSet Name="UsernamesGame" Association="ConverterGameDBModel.UsernamesGame">
+            <End EntitySet="Usernames" Role="Usernames" />
+            <End EntitySet="Games" Role="Game" />
+          </AssociationSet>
+          <EntitySet Name="GameDatas" EntityType="ConverterGameDBModel.GameData" />
+          <AssociationSet Name="GameGameData" Association="ConverterGameDBModel.GameGameData">
+            <End EntitySet="Games" Role="Game" />
+            <End EntitySet="GameDatas" Role="GameData" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Usernames">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Games" Relationship="ConverterGameDBModel.UsernamesGame" FromRole="Usernames" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Username" Relationship="ConverterGameDBModel.UsernamesGame" FromRole="Game" ToRole="Usernames" />
+          <Property Name="UserN" Nullable="false" Type="String" />
+          <NavigationProperty Name="GameDatas" Relationship="ConverterGameDBModel.GameGameData" FromRole="Game" ToRole="GameData" />
+        </EntityType>
+        <Association Name="UsernamesGame">
+          <End Type="ConverterGameDBModel.Usernames" Multiplicity="1" Role="Usernames" />
+          <End Type="ConverterGameDBModel.Game" Multiplicity="*" Role="Game" />
+          <ReferentialConstraint>
+            <Principal Role="Usernames">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="UserN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GameData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Game" Relationship="ConverterGameDBModel.GameGameData" FromRole="GameData" ToRole="Game" />
+          <Property Name="GameId" Nullable="false" Type="Int32" />
+          <Property Name="FromType" Type="String" Nullable="true" />
+          <Property Name="ToType" Type="String" Nullable="true" />
+          <Property Name="FromValue" Type="String" Nullable="true" />
+          <Property Name="ToValue" Type="String" Nullable="true" />
+          <Property Name="GameString" Type="String" Nullable="true" />
+        </EntityType>
+        <Association Name="GameGameData">
+          <End Type="ConverterGameDBModel.Game" Multiplicity="1" Role="Game" />
+          <End Type="ConverterGameDBModel.GameData" Multiplicity="*" Role="GameData" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameData">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ConverterGameDBModelStoreContainer" CdmEntityContainer="ConverterGameDBEntities">
+    <EntitySetMapping Name="Usernames">
+      <EntityTypeMapping TypeName="IsTypeOf(ConverterGameDBModel.Usernames)">
+        <MappingFragment StoreEntitySet="Usernames">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(ConverterGameDBModel.Game)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserN" ColumnName="UserN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GameDatas">
+      <EntityTypeMapping TypeName="IsTypeOf(ConverterGameDBModel.GameData)">
+        <MappingFragment StoreEntitySet="GameDatas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="FromType" ColumnName="FromType" />
+          <ScalarProperty Name="ToType" ColumnName="ToType" />
+          <ScalarProperty Name="FromValue" ColumnName="FromValue" />
+          <ScalarProperty Name="ToValue" ColumnName="ToValue" />
+          <ScalarProperty Name="GameString" ColumnName="GameString" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
